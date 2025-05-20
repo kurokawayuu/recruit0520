@@ -538,10 +538,20 @@ if ($job_types && !is_wp_error($job_types)) {
     </span>
 </div>
                                 
-                                <div class="info-item">
-                                    <span class="info-icon"><i class="fa-solid fa-location-dot"></i></span>
-                                    <span><?php echo esc_html($facility_address); ?></span>
-                                </div>
+                              <div class="info-item">
+    <span class="info-icon"><i class="fa-solid fa-location-dot"></i></span>
+    <span>
+        <?php 
+            $facility_address = get_post_meta(get_the_ID(), 'facility_address', true);
+            
+            // 郵便番号部分を削除する（〒123-4567などのパターンを検出）
+            $address_without_postal = preg_replace('/〒?\s*\d{3}-\d{4}\s*/u', '', $facility_address);
+            
+            // 郵便番号を除いた住所を表示
+            echo esc_html($address_without_postal);
+        ?>
+    </span>
+</div>
                             </div>
                         </div>
                     </div>
